@@ -1,0 +1,51 @@
+import { BottomNav } from '@/components/layout/BottomNav';
+import { StatsCards } from '@/components/dashboard/StatsCards';
+import { QuickActions } from '@/components/dashboard/QuickActions';
+import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
+import { useStore } from '@/store/useStore';
+
+const Dashboard = () => {
+  const { shopSettings } = useStore();
+
+  return (
+    <BottomNav>
+      <div className="page-container bg-background">
+        {/* Header */}
+        <header className="bg-primary text-primary-foreground px-4 py-6 rounded-b-3xl shadow-lg">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-sm opacity-80 mb-1">السلام علیکم 👋</p>
+            <h1 className="text-2xl font-bold font-urdu">{shopSettings.shopName}</h1>
+            <p className="text-sm opacity-80 mt-1">Welcome to Udhaar Khata</p>
+          </div>
+        </header>
+
+        <div className="max-w-4xl mx-auto px-4 -mt-4">
+          {/* Stats Cards */}
+          <section className="mb-6">
+            <StatsCards />
+          </section>
+
+          {/* Quick Actions */}
+          <section className="mb-6">
+            <h2 className="section-title flex items-center gap-2">
+              Quick Actions
+              <span className="text-sm font-normal text-muted-foreground font-urdu">فوری کام</span>
+            </h2>
+            <QuickActions />
+          </section>
+
+          {/* Recent Customers */}
+          <section className="mb-6">
+            <h2 className="section-title flex items-center gap-2">
+              Recent Customers
+              <span className="text-sm font-normal text-muted-foreground font-urdu">حالیہ گاہک</span>
+            </h2>
+            <RecentCustomers />
+          </section>
+        </div>
+      </div>
+    </BottomNav>
+  );
+};
+
+export default Dashboard;
