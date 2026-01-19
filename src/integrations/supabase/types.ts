@@ -14,7 +14,178 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      customers: {
+        Row: {
+          balance: number | null
+          created_at: string
+          id: string
+          last_transaction_date: string | null
+          local_id: string
+          name: string
+          phone: string | null
+          shop_id: string
+          updated_at: string
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string
+          id?: string
+          last_transaction_date?: string | null
+          local_id: string
+          name: string
+          phone?: string | null
+          shop_id: string
+          updated_at?: string
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string
+          id?: string
+          last_transaction_date?: string | null
+          local_id?: string
+          name?: string
+          phone?: string | null
+          shop_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_logs: {
+        Row: {
+          customer_id: string | null
+          id: string
+          message: string | null
+          notification_type: string
+          sent_at: string
+          shop_id: string
+          success: boolean | null
+        }
+        Insert: {
+          customer_id?: string | null
+          id?: string
+          message?: string | null
+          notification_type?: string
+          sent_at?: string
+          shop_id: string
+          success?: boolean | null
+        }
+        Update: {
+          customer_id?: string | null
+          id?: string
+          message?: string | null
+          notification_type?: string
+          sent_at?: string
+          shop_id?: string
+          success?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_logs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_logs_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shops: {
+        Row: {
+          address: string | null
+          created_at: string
+          id: string
+          notification_enabled: boolean | null
+          onesignal_player_id: string | null
+          overdue_days_threshold: number | null
+          owner_name: string | null
+          phone: string | null
+          shop_name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          notification_enabled?: boolean | null
+          onesignal_player_id?: string | null
+          overdue_days_threshold?: number | null
+          owner_name?: string | null
+          phone?: string | null
+          shop_name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          notification_enabled?: boolean | null
+          onesignal_player_id?: string | null
+          overdue_days_threshold?: number | null
+          owner_name?: string | null
+          phone?: string | null
+          shop_name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      udhaar_entries: {
+        Row: {
+          amount: number
+          created_at: string
+          customer_id: string
+          description: string | null
+          entry_date: string
+          entry_type: string
+          id: string
+          local_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          customer_id: string
+          description?: string | null
+          entry_date?: string
+          entry_type: string
+          id?: string
+          local_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          customer_id?: string
+          description?: string | null
+          entry_date?: string
+          entry_type?: string
+          id?: string
+          local_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "udhaar_entries_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
