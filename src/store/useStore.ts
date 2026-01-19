@@ -1,13 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem } from '@/types';
+import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem, Language } from '@/types';
 
 interface AppState {
+  // App Settings
+  onboardingCompleted: boolean;
+  language: Language;
+  setOnboardingCompleted: (completed: boolean) => void;
+  setLanguage: (language: Language) => void;
+
   // Shop Settings
   shopSettings: ShopSettings;
   setShopSettings: (settings: ShopSettings) => void;
-
-  // Customers
   customers: Customer[];
   addCustomer: (customer: Omit<Customer, 'id' | 'createdAt' | 'lastTransactionDate'>) => void;
   updateCustomer: (id: string, updates: Partial<Customer>) => void;
@@ -43,16 +47,20 @@ const getDateString = (date: Date) => new Date(date).toISOString().split('T')[0]
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
+      // App Settings
+      onboardingCompleted: false,
+      language: 'roman_urdu' as Language,
+      setOnboardingCompleted: (completed) => set({ onboardingCompleted: completed }),
+      setLanguage: (language) => set({ language }),
+
       // Shop Settings
       shopSettings: {
-        shopName: 'میری دکان',
+        shopName: '',
         ownerName: '',
         phone: '',
         address: '',
       },
       setShopSettings: (settings) => set({ shopSettings: settings }),
-
-      // Customers
       customers: [],
       addCustomer: (customer) => {
         const newCustomer: Customer = {
