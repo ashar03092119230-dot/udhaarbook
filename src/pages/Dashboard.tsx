@@ -3,19 +3,20 @@ import { StatsCards } from '@/components/dashboard/StatsCards';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
 import { useStore } from '@/store/useStore';
+import { useTranslation } from '@/lib/i18n/useTranslation';
 
 const Dashboard = () => {
   const { shopSettings } = useStore();
+  const { t, rtl } = useTranslation();
 
   return (
     <BottomNav>
-      <div className="page-container bg-background">
+      <div className="page-container bg-background" dir={rtl ? 'rtl' : 'ltr'}>
         {/* Header */}
         <header className="bg-primary text-primary-foreground px-4 py-6 rounded-b-3xl shadow-lg">
           <div className="max-w-4xl mx-auto">
-            <p className="text-sm opacity-80 mb-1">السلام علیکم 👋</p>
-            <h1 className="text-2xl font-bold font-urdu">{shopSettings.shopName}</h1>
-            <p className="text-sm opacity-80 mt-1">Welcome to Udhaar Khata</p>
+            <p className="text-sm opacity-80 mb-1">{t('welcome')} 👋</p>
+            <h1 className="text-2xl font-bold">{shopSettings.shopName || 'Udhaar Khata'}</h1>
           </div>
         </header>
 
@@ -27,19 +28,12 @@ const Dashboard = () => {
 
           {/* Quick Actions */}
           <section className="mb-6">
-            <h2 className="section-title flex items-center gap-2">
-              Quick Actions
-              <span className="text-sm font-normal text-muted-foreground font-urdu">فوری کام</span>
-            </h2>
             <QuickActions />
           </section>
 
           {/* Recent Customers */}
           <section className="mb-6">
-            <h2 className="section-title flex items-center gap-2">
-              Recent Customers
-              <span className="text-sm font-normal text-muted-foreground font-urdu">حالیہ گاہک</span>
-            </h2>
+            <h2 className="section-title">{t('recentCustomers')}</h2>
             <RecentCustomers />
           </section>
         </div>

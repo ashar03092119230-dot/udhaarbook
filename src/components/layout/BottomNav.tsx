@@ -9,20 +9,20 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/lib/i18n/useTranslation';
 
 interface NavItem {
   icon: LucideIcon;
-  label: string;
-  labelUrdu: string;
+  labelKey: string;
   path: string;
 }
 
 const navItems: NavItem[] = [
-  { icon: Home, label: 'Home', labelUrdu: 'ہوم', path: '/' },
-  { icon: Users, label: 'Customers', labelUrdu: 'گاہک', path: '/customers' },
-  { icon: Package, label: 'Products', labelUrdu: 'سامان', path: '/products' },
-  { icon: Wallet, label: 'Earnings', labelUrdu: 'آمدنی', path: '/earnings' },
-  { icon: Settings, label: 'Settings', labelUrdu: 'ترتیبات', path: '/settings' },
+  { icon: Home, labelKey: 'home', path: '/' },
+  { icon: Users, labelKey: 'customers', path: '/customers' },
+  { icon: Package, labelKey: 'products', path: '/products' },
+  { icon: Wallet, labelKey: 'earnings', path: '/earnings' },
+  { icon: Settings, labelKey: 'settings', path: '/settings' },
 ];
 
 interface BottomNavProps {
@@ -31,9 +31,10 @@ interface BottomNavProps {
 
 export function BottomNav({ children }: BottomNavProps) {
   const location = useLocation();
+  const { t, rtl } = useTranslation();
 
   return (
-    <>
+    <div dir={rtl ? 'rtl' : 'ltr'}>
       <main className="pb-24 md:pb-8 md:pl-64">
         {children}
       </main>
@@ -59,7 +60,7 @@ export function BottomNav({ children }: BottomNavProps) {
                     "w-6 h-6 transition-transform",
                     isActive && "scale-110"
                   )} />
-                  <span className="text-xs font-medium">{item.label}</span>
+                  <span className="text-xs font-medium">{t(item.labelKey)}</span>
                 </Link>
               );
             })}
@@ -68,9 +69,12 @@ export function BottomNav({ children }: BottomNavProps) {
       </nav>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 flex-col bg-card border-r border-border z-50">
+      <aside className={cn(
+        "hidden md:flex fixed top-0 bottom-0 w-64 flex-col bg-card border-border z-50",
+        rtl ? "right-0 border-l" : "left-0 border-r"
+      )}>
         <div className="p-6 border-b border-border">
-          <h1 className="text-2xl font-bold text-primary">اُدھار کھاتہ</h1>
+          <h1 className="text-2xl font-bold text-primary">📒 {t('home')}</h1>
           <p className="text-sm text-muted-foreground mt-1">Udhaar Khata</p>
         </div>
         
@@ -89,15 +93,12 @@ export function BottomNav({ children }: BottomNavProps) {
                 )}
               >
                 <item.icon className="w-5 h-5" />
-                <div className="flex flex-col">
-                  <span className="font-semibold">{item.label}</span>
-                  <span className="text-xs opacity-70 font-urdu">{item.labelUrdu}</span>
-                </div>
+                <span className="font-semibold">{t(item.labelKey)}</span>
               </Link>
             );
           })}
         </nav>
       </aside>
-    </>
+    </div>
   );
 }

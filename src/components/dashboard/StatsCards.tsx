@@ -1,9 +1,11 @@
 import { useStore } from '@/store/useStore';
 import { TrendingUp, TrendingDown, Users, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/lib/i18n/useTranslation';
 
 export function StatsCards() {
   const { customers, getTodayRecord, getMonthlyStats } = useStore();
+  const { t } = useTranslation();
   
   const todayRecord = getTodayRecord();
   const now = new Date();
@@ -11,20 +13,17 @@ export function StatsCards() {
   
   const totalCustomers = customers.length;
   const totalPending = customers.reduce((sum, c) => sum + c.balance, 0);
-  const overdueCount = customers.filter(c => c.balance > 0).length;
 
   const stats = [
     {
-      label: 'Total Pending',
-      labelUrdu: 'کُل بقایا',
+      labelKey: 'totalUdhaar',
       value: totalPending,
       icon: AlertTriangle,
       color: 'text-warning',
       bgColor: 'bg-warning/10',
     },
     {
-      label: 'Customers',
-      labelUrdu: 'گاہک',
+      labelKey: 'totalCustomers',
       value: totalCustomers,
       icon: Users,
       color: 'text-primary',
@@ -32,16 +31,14 @@ export function StatsCards() {
       isCount: true,
     },
     {
-      label: "Today's Earnings",
-      labelUrdu: 'آج کی کمائی',
+      labelKey: 'todayEarning',
       value: todayRecord?.earnings || 0,
       icon: TrendingUp,
       color: 'text-success',
       bgColor: 'bg-success/10',
     },
     {
-      label: 'Monthly Profit',
-      labelUrdu: 'ماہانہ منافع',
+      labelKey: 'monthlyEarnings',
       value: monthlyStats.profit,
       icon: monthlyStats.profit >= 0 ? TrendingUp : TrendingDown,
       color: monthlyStats.profit >= 0 ? 'text-success' : 'text-destructive',
@@ -53,21 +50,20 @@ export function StatsCards() {
     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       {stats.map((stat, index) => (
         <div
-          key={stat.label}
+          key={stat.labelKey}
           className="stat-card animate-slide-up"
           style={{ animationDelay: `${index * 50}ms` }}
         >
           <div className={cn("inline-flex p-2 rounded-xl mb-3", stat.bgColor)}>
             <stat.icon className={cn("w-5 h-5", stat.color)} />
           </div>
-          <p className="text-xs text-muted-foreground font-medium">{stat.label}</p>
-          <p className="text-xs text-muted-foreground font-urdu mb-1">{stat.labelUrdu}</p>
+          <p className="text-sm text-muted-foreground font-medium mb-2">{t(stat.labelKey)}</p>
           <p className={cn("amount-display", stat.color)}>
             {stat.isCount ? (
-              stat.value
+              <span className="text-2xl font-bold">{stat.value}</span>
             ) : (
               <>
-                <span className="text-lg">Rs</span> {stat.value.toLocaleString('en-PK')}
+                <span className="text-lg">{t('rs')}</span> {stat.value.toLocaleString('en-PK')}
               </>
             )}
           </p>

@@ -45,10 +45,17 @@ export interface ExpenseItem {
   description?: string;
 }
 
+export type Language = 'en' | 'ur' | 'roman_urdu' | 'sindhi' | 'pashto';
+
 export interface ShopSettings {
   shopName: string;
   ownerName: string;
   phone: string;
   address: string;
   qrCodeUrl?: string;
+}
+
+export interface AppSettings {
+  onboardingCompleted: boolean;
+  language: Language;
 }
