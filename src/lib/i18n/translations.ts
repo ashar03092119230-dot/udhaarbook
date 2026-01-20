@@ -93,6 +93,16 @@ export const translations: Record<Language, Record<string, string>> = {
     rs: 'Rs.',
     today: 'Today',
     
+    // AI Helper
+    aiHelper: 'AI Helper',
+    aiHelperDesc: 'Get smart insights about your shop based on your data',
+    popularProducts: 'Best Selling',
+    todayTips: "Today's Tips",
+    noProductsForAI: 'Add products first to get AI insights',
+    aiError: 'Could not get AI advice. Try again.',
+    rateLimitError: 'Too many requests. Try again later.',
+    creditsError: 'AI credits finished. Contact support.',
+    
     // Slip
     slip: 'Slip',
     shareWhatsApp: 'Share on WhatsApp',
@@ -182,6 +192,16 @@ export const translations: Record<Language, Record<string, string>> = {
     back: 'واپس',
     rs: 'روپے',
     today: 'آج',
+    
+    // AI Helper
+    aiHelper: 'AI مددگار',
+    aiHelperDesc: 'اپنی دکان کے ڈیٹا سے سمارٹ مشورے حاصل کریں',
+    popularProducts: 'زیادہ بکنے والا',
+    todayTips: 'آج کا مشورہ',
+    noProductsForAI: 'پہلے سامان شامل کریں',
+    aiError: 'مشورہ نہیں مل سکا۔ دوبارہ کوشش کریں۔',
+    rateLimitError: 'بہت زیادہ درخواستیں۔ بعد میں کوشش کریں۔',
+    creditsError: 'AI کریڈٹ ختم۔ سپورٹ سے رابطہ کریں۔',
     
     // Slip
     slip: 'پرچی',
@@ -273,6 +293,16 @@ export const translations: Record<Language, Record<string, string>> = {
     rs: 'Rs.',
     today: 'Aaj',
     
+    // AI Helper
+    aiHelper: 'AI Madadgar',
+    aiHelperDesc: 'Apni dukaan ke data se smart mashware lein',
+    popularProducts: 'Zyada Biknay Wala',
+    todayTips: 'Aaj Ka Mashwara',
+    noProductsForAI: 'Pehle saamaan daalein',
+    aiError: 'Mashwara nahi mil saka. Dobara try karein.',
+    rateLimitError: 'Bohat zyada requests. Baad mein try karein.',
+    creditsError: 'AI credits khatam. Support se contact karein.',
+    
     // Slip
     slip: 'Parchi',
     shareWhatsApp: 'WhatsApp Par Bhejein',
@@ -363,6 +393,16 @@ export const translations: Record<Language, Record<string, string>> = {
     rs: 'روپيا',
     today: 'اڄ',
     
+    // AI Helper
+    aiHelper: 'AI مددگار',
+    aiHelperDesc: 'پنھنجي دڪان جي ڊيٽا مان سمارٽ صلاح وٺو',
+    popularProducts: 'وڌيڪ وڪرو',
+    todayTips: 'اڄ جي صلاح',
+    noProductsForAI: 'پھريائين سامان شامل ڪريو',
+    aiError: 'صلاح نه ملي سگھي. ٻيهر ڪوشش ڪريو.',
+    rateLimitError: 'تمام گھڻيون درخواستون. بعد ۾ ڪوشش ڪريو.',
+    creditsError: 'AI ڪريڊٽ ختم. سپورٽ سان رابطو ڪريو.',
+    
     // Slip
     slip: 'پرچي',
     shareWhatsApp: 'واٽس ايپ تي موڪليو',
@@ -452,6 +492,16 @@ export const translations: Record<Language, Record<string, string>> = {
     back: 'شاته',
     rs: 'روپۍ',
     today: 'نن',
+    
+    // AI Helper
+    aiHelper: 'AI مرستندوی',
+    aiHelperDesc: 'د خپل دوکان ډیټا څخه سمارټ مشوره ترلاسه کړئ',
+    popularProducts: 'ډیر خرڅیدونکی',
+    todayTips: 'نن مشوره',
+    noProductsForAI: 'لومړی توکي اضافه کړئ',
+    aiError: 'مشوره نشي ترلاسه کیدی. بیا هڅه وکړئ.',
+    rateLimitError: 'ډیرې غوښتنې. وروسته هڅه وکړئ.',
+    creditsError: 'AI کریډیټ پای ته ورسید. ملاتړ سره اړیکه ونیسئ.',
     
     // Slip
     slip: 'پرچی',

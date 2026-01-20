@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { UserPlus, Receipt, PlusCircle, Calculator } from 'lucide-react';
+import { UserPlus, Receipt, PlusCircle, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 
 export function QuickActions() {
@@ -27,9 +27,9 @@ export function QuickActions() {
       variant: 'outline' as const,
     },
     {
-      labelKey: 'addEarning',
-      icon: Calculator,
-      path: '/earnings/add',
+      labelKey: 'aiHelper',
+      icon: Sparkles,
+      path: '/ai-helper',
       variant: 'outline' as const,
     },
   ];
