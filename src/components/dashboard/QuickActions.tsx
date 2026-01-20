@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { UserPlus, Receipt, PlusCircle, Sparkles } from 'lucide-react';
+import { UserPlus, Receipt, Calculator, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 
 export function QuickActions() {
@@ -21,9 +21,9 @@ export function QuickActions() {
       variant: 'accent' as const,
     },
     {
-      labelKey: 'addProduct',
-      icon: PlusCircle,
-      path: '/products/new',
+      labelKey: 'calculator',
+      icon: Calculator,
+      path: '/calculator',
       variant: 'outline' as const,
     },
     {

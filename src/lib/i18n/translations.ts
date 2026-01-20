@@ -107,6 +107,30 @@ export const translations: Record<Language, Record<string, string>> = {
     slip: 'Slip',
     shareWhatsApp: 'Share on WhatsApp',
     downloadSlip: 'Download Slip',
+    selectContact: 'Select Contact',
+    sendToCustomer: 'Send to Customer',
+    
+    // Calculator
+    calculator: 'Calculator',
+    addToBalance: 'Add to Balance',
+    enterAmount: 'Enter Amount',
+    enterValidAmount: 'Please enter a valid amount',
+    earningsAdded: 'Added!',
+    addedToBalance: 'added to balance',
+    expenseAdded: 'Expense Added!',
+    expenseRecorded: 'recorded',
+    selectCategory: 'Select Category',
+    monthlySummary: 'Summary',
+    income: 'Income',
+    netProfit: 'Net Profit',
+    
+    // Expense Categories
+    expStock: 'Stock Purchase',
+    expElectricity: 'Electricity',
+    expRent: 'Rent',
+    expSalary: 'Salary',
+    expMaintenance: 'Maintenance',
+    expOther: 'Other',
   },
   
   ur: {
@@ -207,6 +231,30 @@ export const translations: Record<Language, Record<string, string>> = {
     slip: 'پرچی',
     shareWhatsApp: 'واٹس ایپ پر بھیجیں',
     downloadSlip: 'پرچی ڈاؤنلوڈ کریں',
+    selectContact: 'رابطہ منتخب کریں',
+    sendToCustomer: 'گاہک کو بھیجیں',
+    
+    // Calculator
+    calculator: 'کیلکولیٹر',
+    addToBalance: 'بیلنس میں شامل کریں',
+    enterAmount: 'رقم درج کریں',
+    enterValidAmount: 'درست رقم درج کریں',
+    earningsAdded: 'شامل ہوگیا!',
+    addedToBalance: 'بیلنس میں شامل',
+    expenseAdded: 'خرچہ شامل!',
+    expenseRecorded: 'درج ہوگیا',
+    selectCategory: 'قسم منتخب کریں',
+    monthlySummary: 'خلاصہ',
+    income: 'آمدنی',
+    netProfit: 'خالص نفع',
+    
+    // Expense Categories
+    expStock: 'مال خریداری',
+    expElectricity: 'بجلی',
+    expRent: 'کرایہ',
+    expSalary: 'تنخواہ',
+    expMaintenance: 'مرمت',
+    expOther: 'دیگر',
   },
   
   roman_urdu: {
@@ -307,6 +355,30 @@ export const translations: Record<Language, Record<string, string>> = {
     slip: 'Parchi',
     shareWhatsApp: 'WhatsApp Par Bhejein',
     downloadSlip: 'Parchi Download',
+    selectContact: 'Contact Chunein',
+    sendToCustomer: 'Gaahak Ko Bhejein',
+    
+    // Calculator
+    calculator: 'Calculator',
+    addToBalance: 'Balance Mein Daalein',
+    enterAmount: 'Raqam Likhein',
+    enterValidAmount: 'Sahi raqam likhein',
+    earningsAdded: 'Shaamil Hogaya!',
+    addedToBalance: 'balance mein daal diya',
+    expenseAdded: 'Kharcha Shaamil!',
+    expenseRecorded: 'darj hogaya',
+    selectCategory: 'Qism Chunein',
+    monthlySummary: 'Khulasa',
+    income: 'Aamdani',
+    netProfit: 'Saf Nafa',
+    
+    // Expense Categories
+    expStock: 'Maal Kharidi',
+    expElectricity: 'Bijli',
+    expRent: 'Kiraya',
+    expSalary: 'Tankhwah',
+    expMaintenance: 'Marammat',
+    expOther: 'Doosra',
   },
   
   sindhi: {
@@ -407,6 +479,30 @@ export const translations: Record<Language, Record<string, string>> = {
     slip: 'پرچي',
     shareWhatsApp: 'واٽس ايپ تي موڪليو',
     downloadSlip: 'پرچي ڊائونلوڊ',
+    selectContact: 'رابطو چونڊيو',
+    sendToCustomer: 'گراهڪ کي موڪليو',
+    
+    // Calculator
+    calculator: 'ڪيلڪوليٽر',
+    addToBalance: 'بيلنس ۾ شامل ڪريو',
+    enterAmount: 'رقم لکو',
+    enterValidAmount: 'صحيح رقم لکو',
+    earningsAdded: 'شامل ٿي ويو!',
+    addedToBalance: 'بيلنس ۾ شامل',
+    expenseAdded: 'خرچو شامل!',
+    expenseRecorded: 'درج ٿيو',
+    selectCategory: 'قسم چونڊيو',
+    monthlySummary: 'خلاصو',
+    income: 'آمدني',
+    netProfit: 'صاف نفعو',
+    
+    // Expense Categories
+    expStock: 'مال خريداري',
+    expElectricity: 'بجلي',
+    expRent: 'ڪرايو',
+    expSalary: 'تنخواہ',
+    expMaintenance: 'مرمت',
+    expOther: 'ٻيو',
   },
   
   pashto: {
@@ -507,6 +603,30 @@ export const translations: Record<Language, Record<string, string>> = {
     slip: 'پرچی',
     shareWhatsApp: 'واټس اپ کې واستوئ',
     downloadSlip: 'پرچی ډاونلوډ',
+    selectContact: 'اړیکه وټاکئ',
+    sendToCustomer: 'پیرودونکي ته ولیږئ',
+    
+    // Calculator
+    calculator: 'کیلکولیټر',
+    addToBalance: 'بیلنس کې اضافه کړئ',
+    enterAmount: 'رقم ولیکئ',
+    enterValidAmount: 'سمه رقم ولیکئ',
+    earningsAdded: 'اضافه شو!',
+    addedToBalance: 'بیلنس کې اضافه شو',
+    expenseAdded: 'لګښت اضافه شو!',
+    expenseRecorded: 'ثبت شو',
+    selectCategory: 'ډول وټاکئ',
+    monthlySummary: 'لنډیز',
+    income: 'عاید',
+    netProfit: 'خالص ګټه',
+    
+    // Expense Categories
+    expStock: 'توکي پیرود',
+    expElectricity: 'بریښنا',
+    expRent: 'کرایه',
+    expSalary: 'معاش',
+    expMaintenance: 'ترمیم',
+    expOther: 'نور',
   },
 };
 

@@ -2,16 +2,18 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Copy, Share2, FileDown, QrCode } from 'lucide-react';
+import { ArrowLeft, Copy, Share2, FileDown, QrCode, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { useRef } from 'react';
+import { useTranslation } from '@/lib/i18n/useTranslation';
 
 const SlipPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { getCustomer, getCustomerEntries, shopSettings } = useStore();
   const { toast } = useToast();
+  const { t, rtl } = useTranslation();
   const slipRef = useRef<HTMLDivElement>(null);
 
   const customer = id ? getCustomer(id) : undefined;
@@ -62,16 +64,35 @@ const SlipPage = () => {
   const handleCopyWhatsApp = () => {
     navigator.clipboard.writeText(generateWhatsAppText());
     toast({
-      title: 'Copied! ✓',
-      description: 'WhatsApp text copied to clipboard',
+      title: `${t('slip')} ✓`,
+      description: t('shareWhatsApp'),
     });
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = encodeURIComponent(generateWhatsAppText());
+    // If customer has phone number, open WhatsApp with that number
+    if (customer?.phone) {
+      // Clean phone number - remove spaces, dashes
+      const cleanPhone = customer.phone.replace(/[\s\-]/g, '');
+      // Pakistani numbers - add country code if needed
+      const formattedPhone = cleanPhone.startsWith('+') 
+        ? cleanPhone.slice(1) 
+        : cleanPhone.startsWith('0') 
+          ? '92' + cleanPhone.slice(1) 
+          : '92' + cleanPhone;
+      window.open(`https://wa.me/${formattedPhone}?text=${text}`, '_blank');
+    } else {
+      // Open WhatsApp with just the text (user selects contact)
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
   };
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Udhaar Slip',
+          title: t('slip'),
           text: generateWhatsAppText(),
         });
       } catch (error) {
@@ -84,7 +105,7 @@ const SlipPage = () => {
 
   return (
     <BottomNav>
-      <div className="page-container bg-background">
+      <div className="page-container bg-background" dir={rtl ? 'rtl' : 'ltr'}>
         {/* Header */}
         <header className="bg-card border-b border-border px-4 py-4 sticky top-0 z-40">
           <div className="max-w-md mx-auto flex items-center gap-4">
@@ -92,7 +113,7 @@ const SlipPage = () => {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Udhaar Slip</h1>
+              <h1 className="text-xl font-bold text-foreground">{t('slip')}</h1>
               <p className="text-sm text-muted-foreground font-urdu">اُدھار پرچی</p>
             </div>
           </div>
@@ -168,24 +189,24 @@ const SlipPage = () => {
 
           {/* Action Buttons */}
           <div className="mt-6 space-y-3">
+            {/* Primary WhatsApp Button - BIG */}
             <Button
               size="xl"
-              className="w-full"
-              onClick={handleCopyWhatsApp}
+              className="w-full h-16 text-lg gap-3 bg-[#25D366] hover:bg-[#20BD5A]"
+              onClick={handleWhatsAppShare}
             >
-              <Copy className="w-5 h-5 mr-2" />
-              Copy for WhatsApp
-              <span className="font-urdu ml-2">واٹس ایپ کے لیے کاپی</span>
+              <MessageCircle className="w-7 h-7" />
+              {t('shareWhatsApp')}
             </Button>
 
             <div className="grid grid-cols-2 gap-3">
+              <Button variant="outline" size="lg" onClick={handleCopyWhatsApp}>
+                <Copy className="w-5 h-5 mr-2" />
+                Copy
+              </Button>
               <Button variant="outline" size="lg" onClick={handleShare}>
                 <Share2 className="w-5 h-5 mr-2" />
                 Share
-              </Button>
-              <Button variant="outline" size="lg">
-                <FileDown className="w-5 h-5 mr-2" />
-                Save PDF
               </Button>
             </div>
           </div>
