@@ -16,6 +16,7 @@ import ProductsPage from "./pages/ProductsPage";
 import NewProductPage from "./pages/NewProductPage";
 import EarningsPage from "./pages/EarningsPage";
 import SettingsPage from "./pages/SettingsPage";
+import AIHelperPage from "./pages/AIHelperPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const AppContent = () => {
         <Route path="/products/new" element={<NewProductPage />} />
         <Route path="/earnings" element={<EarningsPage />} />
         <Route path="/earnings/add" element={<EarningsPage />} />
+        <Route path="/ai-helper" element={<AIHelperPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
