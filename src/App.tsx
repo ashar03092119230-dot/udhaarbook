@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useStore } from "@/store/useStore";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import AuthPage from "./pages/AuthPage";
 import OnboardingFlow from "@/components/onboarding/OnboardingFlow";
 import Dashboard from "./pages/Dashboard";
 import CustomersPage from "./pages/CustomersPage";
@@ -31,35 +34,44 @@ const AppContent = () => {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/customers" element={<CustomersPage />} />
-        <Route path="/customers/new" element={<NewCustomerPage />} />
-        <Route path="/customers/:id" element={<CustomerDetailPage />} />
-        <Route path="/udhaar/new" element={<NewUdhaarPage />} />
-        <Route path="/payment/new" element={<NewPaymentPage />} />
-        <Route path="/slip/:id" element={<SlipPage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/new" element={<NewProductPage />} />
-        <Route path="/earnings" element={<EarningsPage />} />
-        <Route path="/earnings/add" element={<EarningsPage />} />
-        <Route path="/calculator" element={<CalculatorPage />} />
-        <Route path="/ai-helper" element={<AIHelperPage />} />
-        <Route path="/reminders" element={<RemindersPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/customers" element={<CustomersPage />} />
+      <Route path="/customers/new" element={<NewCustomerPage />} />
+      <Route path="/customers/:id" element={<CustomerDetailPage />} />
+      <Route path="/udhaar/new" element={<NewUdhaarPage />} />
+      <Route path="/payment/new" element={<NewPaymentPage />} />
+      <Route path="/slip/:id" element={<SlipPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/products/new" element={<NewProductPage />} />
+      <Route path="/earnings" element={<EarningsPage />} />
+      <Route path="/earnings/add" element={<EarningsPage />} />
+      <Route path="/calculator" element={<CalculatorPage />} />
+      <Route path="/ai-helper" element={<AIHelperPage />} />
+      <Route path="/reminders" element={<RemindersPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AppContent />
+      <AuthProvider>
+        <BrowserRouter>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/*" element={
+              <ProtectedRoute>
+                <AppContent />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
