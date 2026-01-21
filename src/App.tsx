@@ -18,6 +18,7 @@ import EarningsPage from "./pages/EarningsPage";
 import CalculatorPage from "./pages/CalculatorPage";
 import SettingsPage from "./pages/SettingsPage";
 import AIHelperPage from "./pages/AIHelperPage";
+import RemindersPage from "./pages/RemindersPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const AppContent = () => {
         <Route path="/earnings/add" element={<EarningsPage />} />
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/ai-helper" element={<AIHelperPage />} />
+        <Route path="/reminders" element={<RemindersPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

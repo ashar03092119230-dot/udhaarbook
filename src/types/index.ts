@@ -53,6 +53,8 @@ export interface ShopSettings {
   phone: string;
   address: string;
   qrCodeUrl?: string;
+  closingReminderEnabled?: boolean;
+  closingTime?: string;
 }
 
 export interface AppSettings {
