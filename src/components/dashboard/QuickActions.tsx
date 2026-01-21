@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { UserPlus, Receipt, Calculator, Sparkles } from 'lucide-react';
+import { UserPlus, Receipt, Calculator, Bell } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 
 export function QuickActions() {
@@ -27,9 +27,9 @@ export function QuickActions() {
       variant: 'outline' as const,
     },
     {
-      labelKey: 'aiHelper',
-      icon: Sparkles,
-      path: '/ai-helper',
+      labelKey: 'reminders',
+      icon: Bell,
+      path: '/reminders',
       variant: 'outline' as const,
     },
   ];
