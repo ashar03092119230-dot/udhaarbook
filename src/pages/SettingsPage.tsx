@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Store, User, Phone, MapPin, QrCode, Save, Globe, Check } from 'lucide-react';
+import { Store, User, Phone, MapPin, QrCode, Save, Globe, Check, Upload, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import { Language, languageNames } from '@/lib/i18n/translations';
@@ -13,6 +13,7 @@ const SettingsPage = () => {
   const { shopSettings, setShopSettings, language, setLanguage } = useStore();
   const { toast } = useToast();
   const { t, rtl } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [shopName, setShopName] = useState(shopSettings.shopName);
   const [ownerName, setOwnerName] = useState(shopSettings.ownerName);
@@ -20,6 +21,34 @@ const SettingsPage = () => {
   const [address, setAddress] = useState(shopSettings.address);
   const [qrCodeUrl, setQrCodeUrl] = useState(shopSettings.qrCodeUrl || '');
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(language);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: 'Invalid file',
+          description: 'Please select an image file',
+          variant: 'destructive',
+        });
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        setQrCodeUrl(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveQr = () => {
+    setQrCodeUrl('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleSave = () => {
     setShopSettings({
@@ -138,36 +167,60 @@ const SettingsPage = () => {
               />
             </div>
 
-            {/* QR Code URL */}
+            {/* QR Code Upload */}
             <div className="space-y-2 animate-slide-up" style={{ animationDelay: '250ms' }}>
-              <Label htmlFor="qrCode" className="text-base font-semibold flex items-center gap-2">
+              <Label className="text-base font-semibold flex items-center gap-2">
                 <QrCode className="w-4 h-4 text-primary" />
                 {t('qrCode')}
               </Label>
-              <Input
-                id="qrCode"
-                type="url"
-                value={qrCodeUrl}
-                onChange={(e) => setQrCodeUrl(e.target.value)}
-                placeholder="https://..."
-                className="h-14 text-lg rounded-xl"
+              
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                className="hidden"
               />
-            </div>
 
-            {/* QR Preview */}
-            {qrCodeUrl && (
-              <div className="bg-secondary rounded-2xl p-4 text-center animate-scale-in">
-                <p className="text-sm text-muted-foreground mb-2">{t('qrCode')}</p>
-                <img
-                  src={qrCodeUrl}
-                  alt="Payment QR Code"
-                  className="w-32 h-32 mx-auto rounded-lg border border-border object-contain"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              </div>
-            )}
+              {!qrCodeUrl ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full h-24 border-dashed border-2 flex flex-col gap-2 rounded-xl"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="w-8 h-8 text-muted-foreground" />
+                  <span className="text-muted-foreground">Select QR Image</span>
+                </Button>
+              ) : (
+                <div className="bg-secondary rounded-2xl p-4 text-center animate-scale-in relative">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-8 w-8"
+                    onClick={handleRemoveQr}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                  <p className="text-sm text-muted-foreground mb-2">{t('qrCode')}</p>
+                  <img
+                    src={qrCodeUrl}
+                    alt="Payment QR Code"
+                    className="w-32 h-32 mx-auto rounded-lg border border-border object-contain"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="mt-2"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    Change Image
+                  </Button>
+                </div>
+              )}
+            </div>
 
             {/* Save Button */}
             <Button

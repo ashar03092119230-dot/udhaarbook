@@ -1,17 +1,14 @@
 import { BottomNav } from '@/components/layout/BottomNav';
-import { HeroDecision } from '@/components/ai/HeroDecision';
-import { AIInsightButtons } from '@/components/ai/AIInsightButtons';
-import { QuickStatsBar } from '@/components/ai/QuickStatsBar';
+import { StatsCards } from '@/components/dashboard/StatsCards';
+import { QuickActions } from '@/components/dashboard/QuickActions';
+import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
+import { AISidebar } from '@/components/ai/AISidebar';
 import { useStore } from '@/store/useStore';
 import { useTranslation } from '@/lib/i18n/useTranslation';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Users, Package, Calculator, Bell } from 'lucide-react';
 
 const Dashboard = () => {
   const { shopSettings } = useStore();
   const { t, rtl } = useTranslation();
-  const navigate = useNavigate();
 
   return (
     <BottomNav>
@@ -24,61 +21,29 @@ const Dashboard = () => {
           </div>
         </header>
 
-        <div className="max-w-4xl mx-auto px-4 -mt-6 space-y-4 pb-4">
-          {/* Hero AI Decision - Main Focus */}
+        <div className="max-w-4xl mx-auto px-4 -mt-6 space-y-6 pb-4">
+          {/* Stats Cards */}
           <section>
-            <HeroDecision />
+            <StatsCards />
           </section>
 
-          {/* Quick Stats Bar */}
+          {/* Quick Actions */}
           <section>
-            <QuickStatsBar />
+            <h2 className="text-lg font-semibold mb-3">{t('addCustomer').split(' ')[0]} ➕</h2>
+            <QuickActions />
           </section>
 
-          {/* AI Sales Insights */}
+          {/* Recent Customers */}
           <section>
-            <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              🤖 {t('aiInsights')}
-            </h2>
-            <AIInsightButtons />
-          </section>
-
-          {/* Quick Navigation */}
-          <section className="grid grid-cols-4 gap-2 pt-2">
-            <Button
-              variant="ghost"
-              className="flex flex-col h-16 gap-1 border border-border"
-              onClick={() => navigate('/customers')}
-            >
-              <Users className="h-5 w-5 text-primary" />
-              <span className="text-xs">{t('customers')}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              className="flex flex-col h-16 gap-1 border border-border"
-              onClick={() => navigate('/products')}
-            >
-              <Package className="h-5 w-5 text-primary" />
-              <span className="text-xs">{t('products')}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              className="flex flex-col h-16 gap-1 border border-border"
-              onClick={() => navigate('/calculator')}
-            >
-              <Calculator className="h-5 w-5 text-primary" />
-              <span className="text-xs">{t('calculator')}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              className="flex flex-col h-16 gap-1 border border-border"
-              onClick={() => navigate('/reminders')}
-            >
-              <Bell className="h-5 w-5 text-primary" />
-              <span className="text-xs">{t('reminders')}</span>
-            </Button>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold">{t('recentCustomers')}</h2>
+            </div>
+            <RecentCustomers />
           </section>
         </div>
+
+        {/* AI Sidebar Trigger */}
+        <AISidebar />
       </div>
     </BottomNav>
   );
