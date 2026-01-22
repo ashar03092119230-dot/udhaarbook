@@ -6,6 +6,7 @@ const corsHeaders = {
 };
 
 interface Product {
+  id?: string;
   name: string;
   supplier: string;
   totalSold: number;
@@ -14,13 +15,20 @@ interface Product {
   soldOut: boolean;
 }
 
+interface Customer {
+  id?: string;
+  name: string;
+  balance: number;
+  lastTransactionDate?: string;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { products, language, insightType } = await req.json();
+    const { products, customers, language, insightType } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -30,7 +38,7 @@ serve(async (req) => {
     console.log(`Generating ${insightType} insight for ${products?.length || 0} products in ${language}`);
 
     // Build language-specific prompts
-    const languageInstructions = {
+    const languageInstructions: Record<string, string> = {
       en: "Respond in simple English.",
       ur: "Respond in Urdu script (اردو).",
       roman_urdu: "Respond in Roman Urdu (like 'Yeh product zyada bik raha hai').",
@@ -38,38 +46,97 @@ serve(async (req) => {
       pashto: "Respond in Pashto script (پښتو).",
     };
 
-    const langInstruction = languageInstructions[language as keyof typeof languageInstructions] || languageInstructions.roman_urdu;
+    const langInstruction = languageInstructions[language] || languageInstructions.roman_urdu;
 
     let systemPrompt = "";
     let userPrompt = "";
 
-    if (insightType === "popular") {
-      systemPrompt = `You are a helpful shopkeeper assistant. Analyze product sales data and identify:
-1. Which supplier/company's products are selling the most
-2. Fast-selling products (high totalSold)
-3. Slow-moving products (low totalSold, high quantity remaining)
+    if (insightType === "hero") {
+      // HERO DECISION - One clear action for today
+      systemPrompt = `You are a smart local shopkeeper assistant. Based on the shop data, give EXACTLY ONE clear, actionable decision for today.
 
 ${langInstruction}
 
-Keep your response VERY SHORT and SIMPLE - like advice from an experienced shopkeeper.
-Use simple words, no technical terms. Maximum 4-5 bullet points.
-Use emojis to make it friendly: 🔥 for fast selling, 🐢 for slow moving, 📦 for stock advice.`;
+Rules:
+- Give ONLY ONE decision in 1-2 sentences
+- Make it specific and actionable
+- Use simple language like talking to a friend
+- Include the specific product/customer name if relevant
+- Examples of good decisions:
+  * "Aaj Pepsi zyada rakho, yeh sabse zyada bik rahi hai"
+  * "Ahmad sahab ko udhaar mat do, unka 5000 pehle se baqi hai"
+  * "Chips ki qeemat 5 rupay barha do"
+  * "Lays aur Pepsi sath mein rakho, combo mein bikenge"
 
-      userPrompt = `Here are my shop's products:\n${JSON.stringify(products, null, 2)}\n\nTell me which products/companies are selling well and which are slow.`;
+DO NOT give lists or multiple options. ONE DECISION ONLY.`;
+
+      const productsData = products?.length > 0 ? JSON.stringify(products.slice(0, 10)) : "No products";
+      const customersData = customers?.length > 0 ? JSON.stringify(customers.slice(0, 10)) : "No customers";
+
+      userPrompt = `Shop Data:
+Products: ${productsData}
+Customers with pending udhaar: ${customersData}
+
+Give me ONE decision for today.`;
+    } else if (insightType === "popular") {
+      // Fast selling products
+      systemPrompt = `You are a shopkeeper assistant. Identify the FAST-SELLING products.
+
+${langInstruction}
+
+Keep response to 2-3 lines ONLY. Be specific with product names.
+Use 🔥 emoji for hot items.`;
+
+      userPrompt = `Products: ${JSON.stringify(products?.slice(0, 15) || [])}
+
+Which products are selling fast?`;
+    } else if (insightType === "slow") {
+      // Slow selling products
+      systemPrompt = `You are a shopkeeper assistant. Identify the SLOW-MOVING products that need attention.
+
+${langInstruction}
+
+Keep response to 2-3 lines ONLY. Be specific with product names.
+Use 🐌 emoji for slow items. Suggest one quick fix.`;
+
+      userPrompt = `Products: ${JSON.stringify(products?.slice(0, 15) || [])}
+
+Which products are selling slow and need attention?`;
+    } else if (insightType === "loss") {
+      // Loss/problem analysis
+      systemPrompt = `You are a shopkeeper assistant. Identify potential LOSS CAUSES in the shop.
+
+${langInstruction}
+
+Look for:
+- Products with low sales but high stock (money stuck)
+- Customers with high pending udhaar
+- Products that might expire or go stale
+
+Keep response to 2-3 lines. Use ⚠️ emoji for warnings.`;
+
+      const customersData = customers?.filter((c: Customer) => c.balance > 1000) || [];
+      userPrompt = `Products: ${JSON.stringify(products?.slice(0, 15) || [])}
+High Balance Customers: ${JSON.stringify(customersData.slice(0, 5))}
+
+What could be causing loss?`;
     } else if (insightType === "tips") {
-      systemPrompt = `You are an experienced local shopkeeper giving marketing advice. Based on the product data:
-1. Suggest product placement ideas
-2. Recommend discount offers for slow items
-3. Suggest combo offers (items that go well together)
-4. Advise on stock for fast-selling items
+      // Marketing tips
+      systemPrompt = `You are an experienced local shopkeeper giving MARKETING TIPS for a small shop.
 
 ${langInstruction}
 
-Keep tips VERY SHORT (1-2 lines each). Maximum 3-4 practical tips.
-Make them actionable for a small shop owner.
-Use emojis: 💡 for tips, 🛒 for placement, 💰 for discounts, 📈 for stock.`;
+Give 2-3 practical tips about:
+- Product placement (kahan rakhen)
+- Combo offers (kya sath mein bikta hai)
+- Price adjustment
+- Udhaar control
 
-      userPrompt = `Here are my shop's products:\n${JSON.stringify(products, null, 2)}\n\nGive me simple marketing tips for my shop.`;
+Use 💡 emoji. Keep tips SHORT and PRACTICAL.`;
+
+      userPrompt = `Products: ${JSON.stringify(products?.slice(0, 15) || [])}
+
+Give me 2-3 quick marketing tips.`;
     } else {
       throw new Error("Invalid insight type");
     }
@@ -110,10 +177,21 @@ Use emojis: 💡 for tips, 🛒 for placement, 💰 for discounts, 📈 for stoc
     const data = await response.json();
     const insight = data.choices?.[0]?.message?.content || "Unable to generate insight";
 
+    // Determine suggested action based on insight content
+    let suggestedAction = "";
+    const insightLower = insight.toLowerCase();
+    if (insightLower.includes("stock") || insightLower.includes("maal") || insightLower.includes("rakho")) {
+      suggestedAction = "stock";
+    } else if (insightLower.includes("price") || insightLower.includes("qeemat") || insightLower.includes("rate")) {
+      suggestedAction = "price";
+    } else if (insightLower.includes("udhaar") || insightLower.includes("credit") || insightLower.includes("baqi")) {
+      suggestedAction = "udhaar";
+    }
+
     console.log("Generated insight successfully");
 
     return new Response(
-      JSON.stringify({ insight }),
+      JSON.stringify({ insight, suggestedAction }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
