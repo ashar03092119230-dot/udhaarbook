@@ -155,6 +155,21 @@ export const translations: Record<Language, Record<string, string>> = {
     noProductsForAI: 'Add products first to get AI insights',
     aiError: 'Could not get AI advice. Try again.',
     rateLimitError: 'Too many requests. Try again later.',
+    
+    // AI Home Screen
+    todayDecision: "Today's Decision",
+    aiInsights: 'AI Insights',
+    fastSelling: 'Fast Selling',
+    slowSelling: 'Slow Selling',
+    lossReason: 'Loss Reason',
+    marketingTips: 'Marketing Tips',
+    addStock: 'Add Stock',
+    updatePrice: 'Update Price',
+    stopUdhaar: 'Stop Credit',
+    shareSlip: 'Share Slip',
+    addDataForAI: 'Add products or customers to get AI advice',
+    tapToGetAdvice: 'Tap to get today\'s advice',
+    getAdvice: 'Get Advice',
     creditsError: 'AI credits finished. Contact support.',
     
     // Slip
@@ -373,6 +388,21 @@ export const translations: Record<Language, Record<string, string>> = {
     rateLimitError: 'بہت زیادہ درخواستیں۔ بعد میں کوشش کریں۔',
     creditsError: 'AI کریڈٹ ختم۔ سپورٹ سے رابطہ کریں۔',
     
+    // AI Home Screen
+    todayDecision: 'آج کا فیصلہ',
+    aiInsights: 'AI مشورے',
+    fastSelling: 'تیز بکنے والا',
+    slowSelling: 'دھیرے بکنے والا',
+    lossReason: 'نقصان کی وجہ',
+    marketingTips: 'مارکیٹنگ ٹپس',
+    addStock: 'اسٹاک شامل کریں',
+    updatePrice: 'قیمت بدلیں',
+    stopUdhaar: 'اُدھار بند',
+    shareSlip: 'پرچی بھیجیں',
+    addDataForAI: 'AI مشورے کے لیے سامان یا گاہک شامل کریں',
+    tapToGetAdvice: 'مشورہ لینے کے لیے ٹیپ کریں',
+    getAdvice: 'مشورہ لیں',
+    
     // Slip
     slip: 'پرچی',
     shareWhatsApp: 'واٹس ایپ پر بھیجیں',
@@ -589,6 +619,21 @@ export const translations: Record<Language, Record<string, string>> = {
     rateLimitError: 'Bohat zyada requests. Baad mein try karein.',
     creditsError: 'AI credits khatam. Support se contact karein.',
     
+    // AI Home Screen
+    todayDecision: 'Aaj Ka Faisla',
+    aiInsights: 'AI Mashware',
+    fastSelling: 'Zyada Biknay Wala',
+    slowSelling: 'Dheere Biknay Wala',
+    lossReason: 'Nuksaan Ki Wajah',
+    marketingTips: 'Marketing Tips',
+    addStock: 'Stock Daalein',
+    updatePrice: 'Qeemat Badlein',
+    stopUdhaar: 'Udhaar Band',
+    shareSlip: 'Parchi Bhejein',
+    addDataForAI: 'AI mashware ke liye saamaan ya gaahak daalein',
+    tapToGetAdvice: 'Mashwara lene ke liye tap karein',
+    getAdvice: 'Mashwara Lein',
+    
     // Slip
     slip: 'Parchi',
     shareWhatsApp: 'WhatsApp Par Bhejein',
@@ -751,6 +796,21 @@ export const translations: Record<Language, Record<string, string>> = {
     rateLimitError: 'تمام گھڻيون درخواستون. بعد ۾ ڪوشش ڪريو.',
     creditsError: 'AI ڪريڊٽ ختم. سپورٽ سان رابطو ڪريو.',
     
+    // AI Home Screen
+    todayDecision: 'اڄ جو فيصلو',
+    aiInsights: 'AI صلاحون',
+    fastSelling: 'تيز وڪڻڻ وارو',
+    slowSelling: 'سست وڪڻڻ وارو',
+    lossReason: 'نقصان جو سبب',
+    marketingTips: 'مارڪيٽنگ صلاحون',
+    addStock: 'اسٽاڪ شامل ڪريو',
+    updatePrice: 'قيمت بدليو',
+    stopUdhaar: 'اُڌار بند',
+    shareSlip: 'پرچي موڪليو',
+    addDataForAI: 'AI صلاح لاءِ سامان يا گراھڪ شامل ڪريو',
+    tapToGetAdvice: 'صلاح وٺڻ لاءِ ٽيپ ڪريو',
+    getAdvice: 'صلاح وٺو',
+    
     // Slip
     slip: 'پرچي',
     shareWhatsApp: 'واٽس ايپ تي موڪليو',
@@ -912,6 +972,21 @@ export const translations: Record<Language, Record<string, string>> = {
     aiError: 'مشوره نشي ترلاسه کیدی. بیا هڅه وکړئ.',
     rateLimitError: 'ډیرې غوښتنې. وروسته هڅه وکړئ.',
     creditsError: 'AI کریډیټ پای ته ورسید. ملاتړ سره اړیکه ونیسئ.',
+    
+    // AI Home Screen
+    todayDecision: 'د نن فیصله',
+    aiInsights: 'AI مشورې',
+    fastSelling: 'ژر خرڅیدونکی',
+    slowSelling: 'ورو خرڅیدونکی',
+    lossReason: 'زیان سبب',
+    marketingTips: 'مارکیټینګ لارښوونې',
+    addStock: 'اسټاک اضافه کړئ',
+    updatePrice: 'بیه بدل کړئ',
+    stopUdhaar: 'پور بند',
+    shareSlip: 'پرچی ولیږئ',
+    addDataForAI: 'د AI مشورې لپاره توکي یا پیرودونکي اضافه کړئ',
+    tapToGetAdvice: 'مشوره ترلاسه کولو لپاره ټیپ کړئ',
+    getAdvice: 'مشوره واخلئ',
     
     // Slip
     slip: 'پرچی',
