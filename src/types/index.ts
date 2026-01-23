@@ -2,6 +2,7 @@ export interface Customer {
   id: string;
   name: string;
   phone: string;
+  photoUrl?: string;
   totalDue: number;
   totalPaid: number;
   balance: number;
