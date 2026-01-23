@@ -33,14 +33,22 @@ export function RecentCustomers() {
           className="w-full flex items-center gap-3 p-4 rounded-xl bg-card hover:bg-secondary/50 transition-all duration-200 animate-slide-up border border-border/50"
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <div className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold",
-            customer.balance > 0 
-              ? "bg-warning/20 text-warning" 
-              : "bg-success/20 text-success"
-          )}>
-            {customer.name.charAt(0).toUpperCase()}
-          </div>
+          {customer.photoUrl ? (
+            <img
+              src={customer.photoUrl}
+              alt={customer.name}
+              className="w-12 h-12 rounded-full object-cover border-2 border-border"
+            />
+          ) : (
+            <div className={cn(
+              "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold",
+              customer.balance > 0 
+                ? "bg-warning/20 text-warning" 
+                : "bg-success/20 text-success"
+            )}>
+              {customer.name.charAt(0).toUpperCase()}
+            </div>
+          )}
           
           <div className="flex-1 text-left">
             <h4 className="font-semibold text-foreground">{customer.name}</h4>

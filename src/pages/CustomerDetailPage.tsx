@@ -80,6 +80,17 @@ const CustomerDetailPage = () => {
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
+              {customer.photoUrl ? (
+                <img
+                  src={customer.photoUrl}
+                  alt={customer.name}
+                  className="w-14 h-14 rounded-full object-cover border-2 border-primary-foreground/30"
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center text-2xl font-bold">
+                  {customer.name.charAt(0).toUpperCase()}
+                </div>
+              )}
               <div className="flex-1">
                 <h1 className="text-2xl font-bold">{customer.name}</h1>
                 <div className="flex items-center gap-2 text-sm opacity-80">

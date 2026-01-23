@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, UserPlus, Phone, User, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, UserPlus, Phone, User, AlertCircle, CheckCircle, Camera, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import { validatePhoneNumber } from '@/hooks/useAuth';
@@ -21,6 +21,34 @@ const NewCustomerPage = () => {
   const [initialBalance, setInitialBalance] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [phoneValid, setPhoneValid] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        toast({
+          title: 'Photo too large',
+          description: 'Please select an image under 2MB',
+          variant: 'destructive',
+        });
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPhotoUrl(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removePhoto = () => {
+    setPhotoUrl('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const validatePhone = (value: string) => {
     setPhone(value);
@@ -85,6 +113,7 @@ const NewCustomerPage = () => {
     addCustomer({
       name: name.trim(),
       phone: phone.trim(),
+      photoUrl: photoUrl || undefined,
       totalDue: balance,
       totalPaid: 0,
       balance: balance,
@@ -120,8 +149,57 @@ const NewCustomerPage = () => {
 
         <div className="max-w-md mx-auto px-4 py-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
+            {/* Photo Upload */}
             <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0ms' }}>
+              <Label className="text-base font-semibold flex items-center gap-2">
+                <Camera className="w-4 h-4 text-primary" />
+                {t('customerPhoto')}
+                <span className="text-muted-foreground font-normal text-sm">({t('optional')})</span>
+              </Label>
+              <div className="flex items-center gap-4">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="hidden"
+                  id="photo-upload"
+                />
+                {photoUrl ? (
+                  <div className="relative">
+                    <img
+                      src={photoUrl}
+                      alt="Customer"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-primary"
+                    />
+                    <button
+                      type="button"
+                      onClick={removePhoto}
+                      className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground rounded-full p-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-20 h-20 rounded-full border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Camera className="w-6 h-6" />
+                    <span className="text-xs mt-1">{t('addPhoto')}</span>
+                  </button>
+                )}
+                {!photoUrl && (
+                  <p className="text-sm text-muted-foreground flex-1">
+                    {t('photoHelp')}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Name */}
+            <div className="space-y-2 animate-slide-up" style={{ animationDelay: '50ms' }}>
               <Label htmlFor="name" className="text-base font-semibold flex items-center gap-2">
                 <User className="w-4 h-4 text-primary" />
                 {t('customerName')}
@@ -137,7 +215,7 @@ const NewCustomerPage = () => {
             </div>
 
             {/* Phone with validation */}
-            <div className="space-y-2 animate-slide-up" style={{ animationDelay: '50ms' }}>
+            <div className="space-y-2 animate-slide-up" style={{ animationDelay: '100ms' }}>
               <Label htmlFor="phone" className="text-base font-semibold flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primary" />
                 {t('phoneNumber')}
@@ -174,7 +252,7 @@ const NewCustomerPage = () => {
             </div>
 
             {/* Initial Balance */}
-            <div className="space-y-2 animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <div className="space-y-2 animate-slide-up" style={{ animationDelay: '150ms' }}>
               <Label htmlFor="balance" className="text-base font-semibold flex items-center gap-2">
                 💰 {t('openingBalance')}
                 <span className="text-muted-foreground font-normal text-sm">({t('optional')})</span>
@@ -203,7 +281,7 @@ const NewCustomerPage = () => {
               type="submit" 
               size="xl" 
               className="w-full mt-8 animate-slide-up"
-              style={{ animationDelay: '150ms' }}
+              style={{ animationDelay: '200ms' }}
               disabled={!!phoneError}
             >
               <UserPlus className="w-5 h-5 mr-2" />

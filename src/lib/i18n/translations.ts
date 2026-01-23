@@ -77,6 +77,9 @@ export const translations: Record<Language, Record<string, string>> = {
     existingBalance: 'Enter if customer has pending udhaar',
     customerAdded: 'Customer Added',
     addedSuccessfully: 'has been added',
+    customerPhoto: 'Customer Photo',
+    addPhoto: 'Add Photo',
+    photoHelp: 'Add a photo for easy recognition',
     
     // Navigation
     home: 'Home',
@@ -308,6 +311,9 @@ export const translations: Record<Language, Record<string, string>> = {
     existingBalance: 'اگر گاہک کا پرانا اُدھار ہے تو لکھیں',
     customerAdded: 'گاہک شامل',
     addedSuccessfully: 'شامل ہوگیا',
+    customerPhoto: 'گاہک کی تصویر',
+    addPhoto: 'تصویر ڈالیں',
+    photoHelp: 'آسان پہچان کے لیے تصویر لگائیں',
     
     // Navigation
     home: 'ہوم',
@@ -539,6 +545,9 @@ export const translations: Record<Language, Record<string, string>> = {
     existingBalance: 'Agar gaahak ka purana udhaar hai to likhein',
     customerAdded: 'Gaahak Shaamil',
     addedSuccessfully: 'shaamil ho gaya',
+    customerPhoto: 'Gaahak Ki Tasveer',
+    addPhoto: 'Tasveer Daalein',
+    photoHelp: 'Aasaan pehchaan ke liye photo lagayen',
     
     // Navigation
     home: 'Home',
