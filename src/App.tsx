@@ -22,6 +22,8 @@ import CalculatorPage from "./pages/CalculatorPage";
 import SettingsPage from "./pages/SettingsPage";
 import AIHelperPage from "./pages/AIHelperPage";
 import RemindersPage from "./pages/RemindersPage";
+import SuppliersPage from "./pages/SuppliersPage";
+import InaamPage from "./pages/InaamPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +51,8 @@ const AppContent = () => {
       <Route path="/calculator" element={<CalculatorPage />} />
       <Route path="/ai-helper" element={<AIHelperPage />} />
       <Route path="/reminders" element={<RemindersPage />} />
+      <Route path="/suppliers" element={<SuppliersPage />} />
+      <Route path="/inaam" element={<InaamPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
