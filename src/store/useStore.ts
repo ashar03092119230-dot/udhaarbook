@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem, Language } from '@/types';
+import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem, Language, Supplier, LoyaltyCustomer } from '@/types';
 
 interface AppState {
   // App Settings
@@ -36,6 +36,18 @@ interface AppState {
   addExpense: (date: Date, expense: Omit<ExpenseItem, 'id'>) => void;
   getTodayRecord: () => DailyRecord | undefined;
   getMonthlyStats: (year: number, month: number) => { earnings: number; expenses: number; profit: number };
+
+  // Suppliers
+  suppliers: Supplier[];
+  addSupplier: (supplier: Omit<Supplier, 'id' | 'createdAt'>) => void;
+  updateSupplier: (id: string, updates: Partial<Supplier>) => void;
+  deleteSupplier: (id: string) => void;
+
+  // Loyalty Customers
+  loyaltyCustomers: LoyaltyCustomer[];
+  addLoyaltyCustomer: (customer: Omit<LoyaltyCustomer, 'id' | 'addedAt'>) => void;
+  removeLoyaltyCustomer: (id: string) => void;
+  getRandomLoyaltyWinner: () => LoyaltyCustomer | undefined;
 }
 
 // Helper to generate IDs
@@ -243,6 +255,51 @@ export const useStore = create<AppState>()(
           expenses: records.reduce((sum, r) => sum + r.totalExpenses, 0),
           profit: records.reduce((sum, r) => sum + r.netProfit, 0),
         };
+      },
+
+      // Suppliers
+      suppliers: [],
+      addSupplier: (supplier) => {
+        const newSupplier: Supplier = {
+          ...supplier,
+          id: generateId(),
+          createdAt: new Date(),
+        };
+        set((state) => ({ suppliers: [...state.suppliers, newSupplier] }));
+      },
+      updateSupplier: (id, updates) => {
+        set((state) => ({
+          suppliers: state.suppliers.map((s) =>
+            s.id === id ? { ...s, ...updates } : s
+          ),
+        }));
+      },
+      deleteSupplier: (id) => {
+        set((state) => ({
+          suppliers: state.suppliers.filter((s) => s.id !== id),
+        }));
+      },
+
+      // Loyalty Customers
+      loyaltyCustomers: [],
+      addLoyaltyCustomer: (customer) => {
+        const newEntry: LoyaltyCustomer = {
+          ...customer,
+          id: generateId(),
+          addedAt: new Date(),
+        };
+        set((state) => ({ loyaltyCustomers: [...state.loyaltyCustomers, newEntry] }));
+      },
+      removeLoyaltyCustomer: (id) => {
+        set((state) => ({
+          loyaltyCustomers: state.loyaltyCustomers.filter((c) => c.id !== id),
+        }));
+      },
+      getRandomLoyaltyWinner: () => {
+        const list = get().loyaltyCustomers;
+        if (list.length === 0) return undefined;
+        const randomIndex = Math.floor(Math.random() * list.length);
+        return list[randomIndex];
       },
     }),
     {

@@ -5,6 +5,9 @@ import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
 import { AISidebar } from '@/components/ai/AISidebar';
 import { useStore } from '@/store/useStore';
 import { useTranslation } from '@/lib/i18n/useTranslation';
+import { Card } from '@/components/ui/card';
+import { Truck, Gift } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { shopSettings } = useStore();
@@ -31,6 +34,36 @@ const Dashboard = () => {
           <section>
             <h2 className="text-lg font-semibold mb-3">{t('addCustomer').split(' ')[0]} ➕</h2>
             <QuickActions />
+          </section>
+
+          {/* Extra Features Row */}
+          <section className="grid grid-cols-2 gap-3">
+            <Link to="/suppliers">
+              <Card className="p-4 rounded-2xl hover:shadow-md transition-shadow cursor-pointer">
+                <div className="flex items-center gap-3">
+                  <div className="bg-primary/10 p-2.5 rounded-xl">
+                    <Truck className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-sm">{t('suppliers')}</h3>
+                    <p className="text-xs text-muted-foreground">{t('manageSuppliers')}</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+            <Link to="/inaam">
+              <Card className="p-4 rounded-2xl hover:shadow-md transition-shadow cursor-pointer">
+                <div className="flex items-center gap-3">
+                  <div className="bg-primary/10 p-2.5 rounded-xl">
+                    <Gift className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-sm">{t('inaam')}</h3>
+                    <p className="text-xs text-muted-foreground">{t('loyaltyRewards')}</p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
           </section>
 
           {/* Recent Customers */}

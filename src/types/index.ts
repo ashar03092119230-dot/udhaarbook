@@ -48,6 +48,24 @@ export interface ExpenseItem {
 
 export type Language = 'en' | 'ur' | 'roman_urdu' | 'sindhi' | 'pashto';
 
+export interface Supplier {
+  id: string;
+  name: string;
+  phone: string;
+  products: string;
+  price: string;
+  createdAt: Date;
+}
+
+export interface LoyaltyCustomer {
+  id: string;
+  customerId: string;
+  customerName: string;
+  customerPhone: string;
+  reason?: string;
+  addedAt: Date;
+}
+
 export interface ShopSettings {
   shopName: string;
   ownerName: string;

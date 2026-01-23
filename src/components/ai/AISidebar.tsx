@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { 
-  Sparkles, X, ChevronRight
-} from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { HeroDecision } from './HeroDecision';
 import { AIInsightButtons } from './AIInsightButtons';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 
@@ -36,11 +33,6 @@ export const AISidebar = () => {
         </SheetHeader>
 
         <div className="space-y-6 pb-8">
-          {/* Hero Decision */}
-          <section>
-            <HeroDecision onActionTaken={() => setOpen(false)} />
-          </section>
-
           {/* AI Insight Buttons */}
           <section>
             <h3 className="text-base font-semibold mb-3 flex items-center gap-2">
