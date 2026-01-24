@@ -279,6 +279,11 @@ export const translations: Record<Language, Record<string, string>> = {
     selectCustomer: 'Select Customer',
     noEligibleCustomers: 'All customers have udhaar or are already added',
     inaamTip: 'Loyal customers with no pending udhaar can be added here. Give them rewards to increase business!',
+    
+    // Weekly Report
+    weeklyReport: 'Weekly Report',
+    totalEarnings: 'Total Earnings',
+    todayEarnings: 'Earnings',
   },
   
   ur: {
@@ -551,6 +556,11 @@ export const translations: Record<Language, Record<string, string>> = {
     selectCustomer: 'گاہک منتخب کریں',
     noEligibleCustomers: 'تمام گاہکوں کا اُدھار ہے یا پہلے سے شامل ہیں',
     inaamTip: 'بغیر اُدھار والے وفادار گاہک یہاں شامل ہو سکتے ہیں۔ انہیں انعام دیں تاکہ کاروبار بڑھے!',
+    
+    // Weekly Report
+    weeklyReport: 'ہفتہ وار رپورٹ',
+    totalEarnings: 'کل کمائی',
+    todayEarnings: 'کمائی',
   },
   
   roman_urdu: {
@@ -823,6 +833,11 @@ export const translations: Record<Language, Record<string, string>> = {
     selectCustomer: 'Gaahak Chunein',
     noEligibleCustomers: 'Sab gaahak ka udhaar hai ya pehle se shaamil hain',
     inaamTip: 'Bina udhaar wale wafadar gaahak yahaan shaamil ho sakte hain. Inko inaam dein taake business barhey!',
+    
+    // Weekly Report
+    weeklyReport: 'Hafta War Report',
+    totalEarnings: 'Kul Kamai',
+    todayEarnings: 'Kamai',
   },
   
   sindhi: {
@@ -1038,6 +1053,11 @@ export const translations: Record<Language, Record<string, string>> = {
     selectCustomer: 'گراھڪ چونڊيو',
     noEligibleCustomers: 'سڀني گراھڪ جو اُدھار آھي يا اڳ ۾ ئي شامل آھن',
     inaamTip: 'بغير اُدھار وارا وفادار گراھڪ ھتي شامل ٿي سگھن ٿا. انھن کي انعام ڏيو ته ڪاروبار وڌي!',
+    
+    // Weekly Report
+    weeklyReport: 'ھفتيوار رپورٽ',
+    totalEarnings: 'ڪُل ڪمائي',
+    todayEarnings: 'ڪمائي',
   },
   
   pashto: {
@@ -1251,6 +1271,11 @@ export const translations: Record<Language, Record<string, string>> = {
     selectCustomer: 'پیرودونکی وټاکئ',
     noEligibleCustomers: 'ټولو پیرودونکو پور لري یا مخکې اضافه شوي',
     inaamTip: 'بې پوره وفادار پیرودونکي دلته اضافه کیدی شي!',
+    
+    // Weekly Report
+    weeklyReport: 'اونۍ راپور',
+    totalEarnings: 'ټوله کمائي',
+    todayEarnings: 'کمائي',
   },
 };
 
