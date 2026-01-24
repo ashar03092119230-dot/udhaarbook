@@ -2,6 +2,7 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
+import { WeeklySalesChart } from '@/components/dashboard/WeeklySalesChart';
 import { AISidebar } from '@/components/ai/AISidebar';
 import { useStore } from '@/store/useStore';
 import { useTranslation } from '@/lib/i18n/useTranslation';
@@ -34,6 +35,11 @@ const Dashboard = () => {
           <section>
             <h2 className="text-lg font-semibold mb-3">{t('addCustomer').split(' ')[0]} ➕</h2>
             <QuickActions />
+          </section>
+
+          {/* Weekly Sales Chart */}
+          <section>
+            <WeeklySalesChart />
           </section>
 
           {/* Extra Features Row */}
