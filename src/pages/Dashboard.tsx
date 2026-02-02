@@ -4,6 +4,8 @@ import { QuickActions } from '@/components/dashboard/QuickActions';
 import { RecentCustomers } from '@/components/dashboard/RecentCustomers';
 import { WeeklySalesChart } from '@/components/dashboard/WeeklySalesChart';
 import { AISidebar } from '@/components/ai/AISidebar';
+import { TokenDisplay } from '@/components/subscription/TokenDisplay';
+import { SubscriptionBanner } from '@/components/subscription/SubscriptionBanner';
 import { useStore } from '@/store/useStore';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import { Card } from '@/components/ui/card';
@@ -11,8 +13,9 @@ import { Truck, Gift } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const { shopSettings } = useStore();
+  const { shopSettings, isSubscribed } = useStore();
   const { t, rtl } = useTranslation();
+  const isPremium = isSubscribed();
 
   return (
     <BottomNav>
@@ -20,14 +23,27 @@ const Dashboard = () => {
         {/* Header */}
         <header className="bg-primary text-primary-foreground px-4 py-5 rounded-b-3xl shadow-lg">
           <div className="max-w-4xl mx-auto">
-            <p className="text-sm opacity-80 mb-1">{t('welcome')} 👋</p>
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-sm opacity-80">{t('welcome')} 👋</p>
+              {/* Token Display in Header */}
+              <div className="scale-90 origin-right">
+                <TokenDisplay />
+              </div>
+            </div>
             <h1 className="text-2xl font-bold">{shopSettings.shopName || 'Udhaar Khata'}</h1>
           </div>
         </header>
 
         <div className="max-w-4xl mx-auto px-4 -mt-6 space-y-6 pb-4">
+          {/* Subscription Banner (for non-premium users) */}
+          {!isPremium && (
+            <section className="pt-8">
+              <SubscriptionBanner />
+            </section>
+          )}
+
           {/* Stats Cards */}
-          <section>
+          <section className={isPremium ? 'pt-8' : ''}>
             <StatsCards />
           </section>
 

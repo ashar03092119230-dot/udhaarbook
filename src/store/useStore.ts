@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem, Language, Supplier, LoyaltyCustomer } from '@/types';
+import { Customer, UdhaarEntry, Product, DailyRecord, ShopSettings, ExpenseItem, Language, Supplier, LoyaltyCustomer, TokenState, SubscriptionState, FREE_DAILY_TOKENS } from '@/types';
 
 interface AppState {
   // App Settings
@@ -48,6 +48,19 @@ interface AppState {
   addLoyaltyCustomer: (customer: Omit<LoyaltyCustomer, 'id' | 'addedAt'>) => void;
   removeLoyaltyCustomer: (id: string) => void;
   getRandomLoyaltyWinner: () => LoyaltyCustomer | undefined;
+
+  // Token System
+  tokenState: TokenState;
+  refreshTokensIfNeeded: () => void;
+  consumeToken: () => boolean; // Returns true if token was consumed, false if no tokens left
+  getTokensRemaining: () => number;
+
+  // Subscription System
+  subscriptionState: SubscriptionState;
+  isSubscribed: () => boolean;
+  subscribe: () => void;
+  cancelSubscription: () => void;
+  hasUnlimitedAccess: () => boolean;
 }
 
 // Helper to generate IDs
@@ -55,6 +68,9 @@ const generateId = () => Math.random().toString(36).substring(2, 15);
 
 // Get today's date string for comparison
 const getDateString = (date: Date) => new Date(date).toISOString().split('T')[0];
+
+// Get today's date string
+const getTodayDateString = () => new Date().toISOString().split('T')[0];
 
 export const useStore = create<AppState>()(
   persist(
@@ -300,6 +316,105 @@ export const useStore = create<AppState>()(
         if (list.length === 0) return undefined;
         const randomIndex = Math.floor(Math.random() * list.length);
         return list[randomIndex];
+      },
+
+      // Token System
+      tokenState: {
+        tokensRemaining: FREE_DAILY_TOKENS,
+        lastRefreshDate: getTodayDateString(),
+        maxDailyTokens: FREE_DAILY_TOKENS,
+      },
+      refreshTokensIfNeeded: () => {
+        const today = getTodayDateString();
+        const { tokenState } = get();
+        
+        if (tokenState.lastRefreshDate !== today) {
+          set({
+            tokenState: {
+              ...tokenState,
+              tokensRemaining: FREE_DAILY_TOKENS,
+              lastRefreshDate: today,
+            },
+          });
+        }
+      },
+      consumeToken: () => {
+        const { hasUnlimitedAccess, tokenState } = get();
+        
+        // Subscribers have unlimited access
+        if (hasUnlimitedAccess()) {
+          return true;
+        }
+        
+        // Refresh tokens if new day
+        get().refreshTokensIfNeeded();
+        
+        if (tokenState.tokensRemaining > 0) {
+          set({
+            tokenState: {
+              ...tokenState,
+              tokensRemaining: tokenState.tokensRemaining - 1,
+            },
+          });
+          return true;
+        }
+        return false;
+      },
+      getTokensRemaining: () => {
+        get().refreshTokensIfNeeded();
+        return get().tokenState.tokensRemaining;
+      },
+
+      // Subscription System
+      subscriptionState: {
+        isSubscribed: false,
+        planType: 'free',
+      },
+      isSubscribed: () => {
+        const { subscriptionState } = get();
+        if (!subscriptionState.isSubscribed) return false;
+        
+        // Check if subscription has expired
+        if (subscriptionState.expiresAt) {
+          const now = new Date();
+          if (new Date(subscriptionState.expiresAt) < now) {
+            // Subscription expired
+            set({
+              subscriptionState: {
+                ...subscriptionState,
+                isSubscribed: false,
+                planType: 'free',
+              },
+            });
+            return false;
+          }
+        }
+        return true;
+      },
+      subscribe: () => {
+        const now = new Date();
+        const expiresAt = new Date(now);
+        expiresAt.setMonth(expiresAt.getMonth() + 1); // 1 month subscription
+        
+        set({
+          subscriptionState: {
+            isSubscribed: true,
+            subscribedAt: now,
+            expiresAt,
+            planType: 'premium',
+          },
+        });
+      },
+      cancelSubscription: () => {
+        set({
+          subscriptionState: {
+            isSubscribed: false,
+            planType: 'free',
+          },
+        });
+      },
+      hasUnlimitedAccess: () => {
+        return get().isSubscribed();
       },
     }),
     {

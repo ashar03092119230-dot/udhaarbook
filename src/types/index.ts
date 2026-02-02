@@ -80,3 +80,20 @@ export interface AppSettings {
   onboardingCompleted: boolean;
   language: Language;
 }
+
+// Token & Subscription System
+export interface TokenState {
+  tokensRemaining: number;
+  lastRefreshDate: string; // ISO date string
+  maxDailyTokens: number;
+}
+
+export interface SubscriptionState {
+  isSubscribed: boolean;
+  subscribedAt?: Date;
+  expiresAt?: Date;
+  planType: 'free' | 'premium';
+}
+
+export const SUBSCRIPTION_PRICE_PKR = 500;
+export const FREE_DAILY_TOKENS = 10;

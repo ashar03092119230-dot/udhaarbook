@@ -6,6 +6,7 @@ import { useTranslation } from '@/lib/i18n/useTranslation';
 import { useStore } from '@/store/useStore';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { UpgradePrompt } from '@/components/subscription/UpgradePrompt';
 
 type InsightType = 'popular' | 'slow' | 'loss' | 'tips';
 
@@ -17,10 +18,11 @@ interface InsightResult {
 
 export const AIInsightButtons = () => {
   const { t, language } = useTranslation();
-  const { products, customers } = useStore();
+  const { products, customers, consumeToken, hasUnlimitedAccess, getTokensRemaining } = useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<InsightType | null>(null);
   const [result, setResult] = useState<InsightResult | null>(null);
+  const [showUpgrade, setShowUpgrade] = useState(false);
 
   const fetchInsight = async (type: InsightType) => {
     if (products.length === 0) {
@@ -28,8 +30,22 @@ export const AIInsightButtons = () => {
       return;
     }
 
+    // Check if user can use AI (has tokens or is subscribed)
+    if (!hasUnlimitedAccess() && getTokensRemaining() <= 0) {
+      setShowUpgrade(true);
+      return;
+    }
+
+    // Consume a token for free users
+    const canProceed = consumeToken();
+    if (!canProceed) {
+      setShowUpgrade(true);
+      return;
+    }
+
     setLoading(type);
     setResult(null);
+    setShowUpgrade(false);
 
     try {
       const response = await fetch(
@@ -149,6 +165,22 @@ export const AIInsightButtons = () => {
   };
 
   const insightTypes: InsightType[] = ['popular', 'slow', 'loss', 'tips'];
+
+  // Show upgrade prompt if tokens are finished
+  if (showUpgrade) {
+    return (
+      <div className="space-y-4">
+        <UpgradePrompt onClose={() => setShowUpgrade(false)} />
+        <Button
+          variant="ghost"
+          className="w-full"
+          onClick={() => setShowUpgrade(false)}
+        >
+          {t('back')}
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
