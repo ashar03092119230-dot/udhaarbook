@@ -305,6 +305,9 @@ export const translations: Record<Language, Record<string, string>> = {
     subscriptionActivated: 'Subscription Activated! Enjoy unlimited access.',
     tokensFinished: 'Free tokens finished!',
     upgradeForUnlimited: 'Subscribe for unlimited AI access',
+    redirectingToPayment: 'Opening payment page...',
+    paymentError: 'Payment error. Please try again.',
+    processing: 'Processing...',
   },
   
   ur: {
@@ -603,6 +606,9 @@ export const translations: Record<Language, Record<string, string>> = {
     subscriptionActivated: 'سبسکرپشن فعال! لامحدود رسائی سے لطف اندوز ہوں۔',
     tokensFinished: 'مفت ٹوکن ختم!',
     upgradeForUnlimited: 'لامحدود AI رسائی کے لیے سبسکرائب کریں',
+    redirectingToPayment: 'پیمنٹ پیج کھل رہا ہے...',
+    paymentError: 'پیمنٹ میں خرابی۔ دوبارہ کوشش کریں۔',
+    processing: 'پراسیسنگ...',
   },
   
   roman_urdu: {
@@ -901,6 +907,9 @@ export const translations: Record<Language, Record<string, string>> = {
     subscriptionActivated: 'Subscription Active! Unlimited access enjoy karein.',
     tokensFinished: 'Free tokens khatam!',
     upgradeForUnlimited: 'Unlimited AI ke liye subscribe karein',
+    redirectingToPayment: 'Payment page khul raha hai...',
+    paymentError: 'Payment mein error. Dobara try karein.',
+    processing: 'Processing...',
   },
   
   sindhi: {
@@ -1142,6 +1151,9 @@ export const translations: Record<Language, Record<string, string>> = {
     subscriptionActivated: 'سبسڪرپشن فعال! لامحدود رسائي جو مزو وٺو۔',
     tokensFinished: 'مفت ٽوڪن ختم!',
     upgradeForUnlimited: 'لامحدود AI لاءِ سبسڪرائب ڪريو',
+    redirectingToPayment: 'ادائيگي صفحو کلي رهيو آهي...',
+    paymentError: 'ادائيگي ۾ غلطي۔ ٻيهر ڪوشش ڪريو۔',
+    processing: 'پروسيسنگ...',
   },
   
   pashto: {
@@ -1381,6 +1393,9 @@ export const translations: Record<Language, Record<string, string>> = {
     subscriptionActivated: 'سبسکرپشن فعاله! نامحدود لاسرسی!',
     tokensFinished: 'وړیا ټوکنز پای!',
     upgradeForUnlimited: 'نامحدود AI لپاره سبسکرائب کړئ',
+    redirectingToPayment: 'د پیسو صفحه خلاصیږي...',
+    paymentError: 'د پیسو غلطي۔ بیا هڅه وکړئ۔',
+    processing: 'پروسس کیږي...',
   },
 };
 
