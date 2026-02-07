@@ -20,14 +20,16 @@ export function StatsCards() {
       value: totalPending,
       icon: AlertTriangle,
       color: 'text-warning',
-      bgColor: 'bg-warning/10',
+      bgColor: 'bg-warning/15',
+      gradient: 'from-warning/20 via-warning/10 to-transparent',
     },
     {
       labelKey: 'totalCustomers',
       value: totalCustomers,
       icon: Users,
       color: 'text-primary',
-      bgColor: 'bg-primary/10',
+      bgColor: 'bg-primary/15',
+      gradient: 'from-primary/20 via-primary/10 to-transparent',
       isCount: true,
     },
     {
@@ -35,14 +37,16 @@ export function StatsCards() {
       value: todayRecord?.earnings || 0,
       icon: TrendingUp,
       color: 'text-success',
-      bgColor: 'bg-success/10',
+      bgColor: 'bg-success/15',
+      gradient: 'from-success/20 via-success/10 to-transparent',
     },
     {
       labelKey: 'monthlyEarnings',
       value: monthlyStats.profit,
       icon: monthlyStats.profit >= 0 ? TrendingUp : TrendingDown,
       color: monthlyStats.profit >= 0 ? 'text-success' : 'text-destructive',
-      bgColor: monthlyStats.profit >= 0 ? 'bg-success/10' : 'bg-destructive/10',
+      bgColor: monthlyStats.profit >= 0 ? 'bg-success/15' : 'bg-destructive/15',
+      gradient: monthlyStats.profit >= 0 ? 'from-success/20 via-success/10 to-transparent' : 'from-destructive/20 via-destructive/10 to-transparent',
     },
   ];
 
@@ -51,22 +55,38 @@ export function StatsCards() {
       {stats.map((stat, index) => (
         <div
           key={stat.labelKey}
-          className="stat-card animate-slide-up"
+          className={cn(
+            "relative overflow-hidden rounded-2xl p-4 transition-all duration-300",
+            "bg-card border border-border/50 shadow-sm",
+            "hover:shadow-md hover:-translate-y-0.5 hover:border-border",
+            "animate-slide-up group"
+          )}
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <div className={cn("inline-flex p-2 rounded-xl mb-3", stat.bgColor)}>
-            <stat.icon className={cn("w-5 h-5", stat.color)} />
+          {/* Background gradient */}
+          <div className={cn(
+            "absolute inset-0 bg-gradient-to-br opacity-50 group-hover:opacity-70 transition-opacity",
+            stat.gradient
+          )} />
+          
+          <div className="relative">
+            <div className={cn("inline-flex p-2.5 rounded-xl mb-3 shadow-sm", stat.bgColor)}>
+              <stat.icon className={cn("w-5 h-5", stat.color)} />
+            </div>
+            <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide mb-1">
+              {t(stat.labelKey)}
+            </p>
+            <p className={cn("font-extrabold text-xl md:text-2xl tracking-tight", stat.color)}>
+              {stat.isCount ? (
+                <span>{stat.value}</span>
+              ) : (
+                <>
+                  <span className="text-base">{t('rs')}</span>{' '}
+                  {stat.value.toLocaleString('en-PK')}
+                </>
+              )}
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground font-medium mb-2">{t(stat.labelKey)}</p>
-          <p className={cn("amount-display", stat.color)}>
-            {stat.isCount ? (
-              <span className="text-2xl font-bold">{stat.value}</span>
-            ) : (
-              <>
-                <span className="text-lg">{t('rs')}</span> {stat.value.toLocaleString('en-PK')}
-              </>
-            )}
-          </p>
         </div>
       ))}
     </div>

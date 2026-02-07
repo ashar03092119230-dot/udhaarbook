@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, Receipt, Calculator, Bell } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n/useTranslation';
+import { cn } from '@/lib/utils';
 
 export function QuickActions() {
   const navigate = useNavigate();
@@ -12,25 +13,31 @@ export function QuickActions() {
       labelKey: 'addCustomer',
       icon: UserPlus,
       path: '/customers/new',
-      variant: 'default' as const,
+      gradient: 'from-primary to-primary/80',
+      shadow: 'shadow-primary/25',
     },
     {
       labelKey: 'addUdhaar',
       icon: Receipt,
       path: '/udhaar/new',
-      variant: 'accent' as const,
+      gradient: 'from-accent to-accent/80',
+      shadow: 'shadow-accent/25',
     },
     {
       labelKey: 'calculator',
       icon: Calculator,
       path: '/calculator',
-      variant: 'outline' as const,
+      gradient: 'from-muted-foreground/80 to-muted-foreground/60',
+      shadow: 'shadow-muted-foreground/15',
+      isOutline: true,
     },
     {
       labelKey: 'reminders',
       icon: Bell,
       path: '/reminders',
-      variant: 'outline' as const,
+      gradient: 'from-muted-foreground/80 to-muted-foreground/60',
+      shadow: 'shadow-muted-foreground/15',
+      isOutline: true,
     },
   ];
 
@@ -39,14 +46,24 @@ export function QuickActions() {
       {actions.map((action, index) => (
         <Button
           key={action.path}
-          variant={action.variant}
+          variant={action.isOutline ? 'outline' : 'default'}
           size="lg"
           onClick={() => navigate(action.path)}
-          className="flex-col h-auto py-5 gap-2 animate-scale-in text-lg"
+          className={cn(
+            "relative flex-col h-auto py-6 gap-3 animate-scale-in text-lg overflow-hidden group",
+            "transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]",
+            !action.isOutline && `bg-gradient-to-br ${action.gradient} shadow-lg ${action.shadow}`,
+            action.isOutline && "border-2 hover:bg-muted/50"
+          )}
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <action.icon className="w-7 h-7" />
-          <span className="font-semibold">{t(action.labelKey)}</span>
+          <div className={cn(
+            "p-3 rounded-xl transition-transform duration-300 group-hover:scale-110",
+            action.isOutline ? "bg-muted" : "bg-white/20"
+          )}>
+            <action.icon className="w-6 h-6" />
+          </div>
+          <span className="font-bold">{t(action.labelKey)}</span>
         </Button>
       ))}
     </div>
